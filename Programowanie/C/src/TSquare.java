@@ -14,11 +14,6 @@ public class TSquare extends TRectangle {
     }
 
     @Override
-    protected TSquare clone() {
-        return (TSquare) super.clone();
-    }
-
-    @Override
     public String toString() {
         return "square:\n " + a.toString() + "\n " + b.toString() + "\n " + c.toString() + "\n " + d.toString();
     }

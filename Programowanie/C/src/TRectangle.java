@@ -4,26 +4,26 @@
  * Time: 16:39
  */
 public class TRectangle extends TFigure {
-    TPoint a;
-    TPoint b;
-    TPoint c;
-    TPoint d;
+    final TPoint a;
+    final TPoint b;
+    final TPoint c;
+    final TPoint d;
 
     public TRectangle(TPoint a, double width, double height) {
-        this.a = a.clone();
-        this.b = a.clone();
-        this.c = a.clone();
-        this.d = a.clone();
+        this.a = a.makeCopy();
+        this.b = a.makeCopy();
+        this.c = a.makeCopy();
+        this.d = a.makeCopy();
         b.move(0, height);
         c.move(width, height);
         d.move(width, 0);
     }
 
     private TRectangle(TPoint a, TPoint b, TPoint c, TPoint d) {
-        this.a = a.clone();
-        this.b = b.clone();
-        this.c = c.clone();
-        this.d = d.clone();
+        this.a = a.makeCopy();
+        this.b = b.makeCopy();
+        this.c = c.makeCopy();
+        this.d = d.makeCopy();
     }
 
     public TCircle outCircle() {
@@ -47,21 +47,6 @@ public class TRectangle extends TFigure {
     @Override
     public TRectangle symmetry(TLine line) {
         return new TRectangle(a.symmetry(line), b.symmetry(line), c.symmetry(line), d.symmetry(line));
-    }
-
-    @Override
-    protected TRectangle clone() {
-        try {
-            TRectangle result = (TRectangle) super.clone();
-            result.a = a.clone();
-            result.b = b.clone();
-            result.c = c.clone();
-            result.d = d.clone();
-            return result;
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     @Override

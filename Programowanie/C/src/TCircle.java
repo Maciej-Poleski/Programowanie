@@ -4,29 +4,17 @@
  * Time: 16:39
  */
 public class TCircle extends TFigure {
-    TPoint center;
-    double radius;
+    private final TPoint center;
+    private final double radius;
 
     public TCircle(TPoint s, double radius) {
-        this.center = s.clone();
+        this.center = s.makeCopy();
         this.radius = radius;
     }
 
     @Override
     public double area() {
         return Math.PI * radius * radius;
-    }
-
-    @Override
-    protected TCircle clone() {
-        try {
-            TCircle result = (TCircle) super.clone();
-            result.center = center.clone();
-            return result;
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     @Override

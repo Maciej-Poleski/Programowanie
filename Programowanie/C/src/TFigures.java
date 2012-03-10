@@ -8,13 +8,15 @@ public class TFigures {
     }
 
     public static boolean sameType(Object a, Object b) {
-        if (!(a instanceof TFigure) || !(b instanceof TFigure))
-            return false;
-        return a.getClass().isInstance(b) || b.getClass().isInstance(a);
+        return !(!(a instanceof TFigure) || !(b instanceof TFigure)) && (a.getClass().isInstance(b) || b.getClass().isInstance(a));
     }
 
     public static boolean areParallel(TLine a, TLine b) {
-        return a.a * b.b - b.a * a.b == 0;
+        double x1 = a.b.x - a.a.x;
+        double y1 = a.b.y - a.a.y;
+        double x2 = b.b.x - b.a.x;
+        double y2 = b.b.y - b.a.y;
+        return x1 * y2 == y1 * x2;
     }
 
     public static double distance(TPoint x, TPoint y) {
@@ -22,6 +24,6 @@ public class TFigures {
     }
 
     public static double distance(TPoint x, TLine line) {
-        return Math.abs(line.a * x.x + line.b * x.y + line.c) / Math.hypot(line.a, line.b);
+        return distance(x, TLine.crossPoint(line, line.perpendicularLine(x)));
     }
 }
