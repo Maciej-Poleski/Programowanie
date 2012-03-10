@@ -4,7 +4,7 @@
  * Time: 16:23
  */
 public class Test0 {
-    public static void main(String[] args) {
+    public static int main(String... args) {
         Polynomial p = new Polynomial();
         System.out.println(p);
         p = Polynomial.multiply(p, p);
@@ -17,5 +17,6 @@ public class Test0 {
         System.out.println(p + " has value " + p.valueAt(2L) + " at 2" );
         p = new Polynomial(0);
         System.out.println(p + " has value " + p.valueAt(2L) + " at 2" );
+        return 1;
     }
 }

@@ -12,7 +12,7 @@ public class A {
     final private static Pattern setPattern = Pattern.compile("^set\\s+([a-z]+)\\s*=\\s*(%|([a-z]+)|([-+]?\\d+))\\s*$");
     final private static Pattern gtPattern = Pattern.compile("^>\\s+(([-+]?)\\s*(%|([a-z]+)|(\\d+))(\\s*([-+*])\\s*(%|([a-z]+)|(\\d+)))*)\\s*$");
     final private static Pattern clearPattern = Pattern.compile("^clear\\s+([a-z]+)\\s*$");
-    final private static Pattern brokenGtPattern = Pattern.compile("^>.*$");
+    final private static Pattern brokenGtPattern = Pattern.compile("^>\\s+.*$");
 
     private static class Variable {
         final String name;
