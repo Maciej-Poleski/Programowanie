@@ -116,57 +116,42 @@ public class ExceptionCounter {
 
     static class ObjectReference {
         final WeakReference<Object> reference;
-        final int hashCode;
+        final ObjectInformation info;
 
         ObjectReference(Object reference) {
             this.reference = new WeakReference<Object>(reference);
-            if (reference == null)
-                this.hashCode = 0;
-            else
-                this.hashCode = reference.hashCode();
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            return reference.get() == ((ObjectReference) o).reference.get();
-        }
-
-        @Override
-        public int hashCode() {
-            return hashCode;
+            info = new ObjectInformation(reference);
         }
     }
 
-    private final HashMap<ObjectReference, ObjectInformation> coreDatabase = new HashMap<ObjectReference, ObjectInformation>();
+    private final List<ObjectReference> coreDatabase = new LinkedList<ObjectReference>();
 
     public void register(Object obj) {
-        if (obj != null)
-            coreDatabase.put(new ObjectReference(obj), new ObjectInformation(obj));
+        if (obj != null) {
+            for (ObjectReference ref : coreDatabase)
+                if (ref.reference.get() == obj)
+                    return;
+            coreDatabase.add(new ObjectReference(obj));
+        }
     }
 
     public void printStatus() {
         SortedSet<String> exceptions = new TreeSet<String>();
         Collection<ObjectInformation> lockedInformation;
-        List<ObjectReference> removeList = new ArrayList<ObjectReference>();
         for (; ; ) {
             try {
 
                 lockedInformation = new ArrayList<ObjectInformation>();
-                for (Map.Entry<ObjectReference, ObjectInformation> entry : coreDatabase.entrySet()) {
-                    if (entry.getKey().reference.get() != null)
-                        lockedInformation.add(entry.getValue());
+                for (ListIterator<ObjectReference> i = coreDatabase.listIterator(); i.hasNext(); ) {
+                    ObjectReference entry = i.next();
+                    if (entry.reference.get() != null)
+                        lockedInformation.add(entry.info);
                     else
-                        removeList.add(entry.getKey());
+                        i.remove();
                 }
                 break;
-            } catch (ConcurrentModificationException e) {
+            } catch (ConcurrentModificationException ignored) {
             }
-        }
-        for (ObjectReference ref : removeList) {
-            coreDatabase.remove(ref);
         }
         List<MethodInformation> allMethods = new ArrayList<MethodInformation>();
         for (ObjectInformation info : lockedInformation) {
