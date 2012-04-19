@@ -1,13 +1,7 @@
 import java.io.IOException;
 import java.io.PipedReader;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * User: Maciej Poleski
@@ -15,116 +9,120 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * Time: 21:35
  */
 public class MessageListener {
+    private final SortedMap<Long, String> messages = new TreeMap<Long, String>();
+    private final Map<PipedReader, Listener> listenerMap = new HashMap<PipedReader, Listener>();
+    private final Observer observer;
     private final int maxMessages;
-    private final Map<Long, String> readyMessages = new TreeMap<Long, String>();
-    private final ReentrantLock readyMessagesLock = new ReentrantLock();
-    private final AtomicBoolean acceptingNewMessages = new AtomicBoolean(true);
-    private final Map<PipedReader, Listener> listeners = Collections.synchronizedMap(new HashMap<PipedReader, Listener>());
-    private final Thread mainThread;
-    private final Thread daemonKeeperThread;
-    private final ReadWriteLock taskLock = new ReentrantReadWriteLock();
 
     public MessageListener(int maxMessages) {
         this.maxMessages = maxMessages;
-        mainThread = Thread.currentThread();
-        daemonKeeperThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    mainThread.join();
-                } catch (InterruptedException e) {
-                    // We are ready - waiting is not reasonable
-                }
-                try {
-                    taskLock.writeLock().lock();
-                    acceptingNewMessages.set(false);
-                    printAnswer();
-                } finally {
-                    taskLock.writeLock().unlock();
-                }
-            }
-        });
-        daemonKeeperThread.setDaemon(false);
-        daemonKeeperThread.start();
+        this.observer = new Observer(Thread.currentThread());
+        this.observer.start();
     }
 
-    class Listener implements Runnable {
-        long ID;
-        String message;
-        final AtomicBoolean stop = new AtomicBoolean(false);
-        final PipedReader reader;
+    public void listen(PipedReader pr) {
+        synchronized (this) {
+            if (listenerMap.containsKey(pr))
+                return;
+            Listener listener = new Listener(pr);
+            listenerMap.put(pr, listener);
+            listener.start();
+        }
+    }
+
+    public void drop(PipedReader pr) {
+        synchronized (this) {
+            if (!listenerMap.containsKey(pr))
+                return;
+            listenerMap.get(pr).drop();
+            listenerMap.remove(pr);
+        }
+    }
+
+    private class Listener extends Thread {
+        private final PipedReader reader;
+        private final AtomicBoolean stop = new AtomicBoolean(false);
 
         Listener(PipedReader reader) {
             this.reader = reader;
+            setDaemon(true);
         }
 
         @Override
         public void run() {
             try {
-                while (!stop.get()) {
-                    int length = reader.read() + reader.read() * 256;
-                    char[] result = new char[length];
-                    for (int i = 0; i < length; ++i)
-                        result[i] = (char) reader.read();
-                    message = new StringBuilder().append(result).reverse().toString();
-                    ID = reader.read() + (reader.read() << 8) + (reader.read() << 16) + (reader.read() << 24);
-                    messageIsReady();
+                while (true) {
+                    if (stop.get()) {
+                        break;
+                    }
+                    int length = reader.read();
+                    if (length == -1) {
+                        break;
+                    }
+                    length += (reader.read() << 8);
+                    char[] buffer = new char[length];
+                    for (int i = 0; i < length; ++i) {
+                        buffer[i] = (char) reader.read();
+                    }
+                    String message = new StringBuilder().append(buffer).reverse().toString();
+                    long id = reader.read() + (reader.read() << 8) + (reader.read() << 16) + (reader.read() << 24);
+                    addMessage(message, id);
                 }
             } catch (IOException ignored) {
             }
         }
 
-        void messageIsReady() {
+        public void drop() {
+            stop.set(true);
+        }
+    }
+
+    private class Observer extends Thread {
+        final Thread mainThread;
+
+        private Observer(Thread mainThread) {
+            this.mainThread = mainThread;
+            setDaemon(false);
+        }
+
+        @Override
+        public void run() {
             try {
-                taskLock.readLock().lock();
-                if (acceptingNewMessages.get()) {
-                    try {
-                        readyMessagesLock.lock();
-                        if (!acceptingNewMessages.get())
-                            return;
-                        if (readyMessages.containsKey(ID)) {
-                            String oldString = readyMessages.get(ID);
-                            if (message.compareTo(oldString) > 0)
-                                readyMessages.put(ID, message);
-                        } else {
-                            readyMessages.put(ID, message);
-                        }
-                        if (readyMessages.size() == maxMessages) {
-                            acceptingNewMessages.set(false);
-                            daemonKeeperThread.interrupt();
-                        }
-                    } finally {
-                        readyMessagesLock.unlock();
+                mainThread.join();
+            } catch (InterruptedException ignored) {
+            }
+            List<Thread> join = new ArrayList<Thread>();
+            synchronized (MessageListener.this) {
+                join.addAll(listenerMap.values());
+            }
+            for (Thread thread : join) {
+                try {
+                    thread.join();
+                } catch (InterruptedException e) {
+                    // false
+                }
+            }
+            synchronized (MessageListener.this) {
+                if (messages.size() == maxMessages) {
+                    for (String message : messages.values()) {
+                        System.out.println(message);
                     }
                 }
-            } finally {
-                taskLock.readLock().unlock();
             }
         }
     }
 
-    private void printAnswer() {
-        try {
-            readyMessagesLock.lock();
-            if (readyMessages.size() != maxMessages)
-                return;
-            for (String string : readyMessages.values())
-                System.out.println(string);
-        } finally {
-            readyMessagesLock.unlock();
+    private synchronized void addMessage(String message, long id) {
+        if (messages.size() < maxMessages) {
+            if (messages.containsKey(id)) {
+                if (messages.get(id).compareTo(message) < 0) {
+                    messages.put(id, message);
+                }
+            } else {
+                messages.put(id, message);
+            }
+        } else {
+            observer.interrupt();
         }
-    }
-
-    public void listen(PipedReader pr) {
-        Listener listener = new Listener(pr);
-        listeners.put(pr, listener);
-        Thread thread = new Thread(listener);
-        thread.setDaemon(true);
-        thread.start();
-    }
-
-    public void drop(PipedReader pr) {
-        listeners.get(pr).stop.set(true);
-        listeners.remove(pr);
     }
 }

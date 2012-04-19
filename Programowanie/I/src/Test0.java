@@ -8,7 +8,7 @@ import java.io.PipedWriter;
  * Time: 13:16
  */
 public class Test0 {
-    public static void main(String... args) throws IOException {
+    public static void main(String... args) throws IOException, InterruptedException {
         MessageListener pl = new MessageListener(3);
         PipedWriter pw[] = new PipedWriter[]{new PipedWriter(), new PipedWriter(), new PipedWriter()};
         for (int i = 0; i < 3; i++)
@@ -16,10 +16,14 @@ public class Test0 {
                 pl.listen(new PipedReader(pw[i]));
             } catch (IOException e) {
             }
-        send(pw[0], "Pierwszy test1", 111);
-        send(pw[0], "Pierwszy test2", 121);
-        send(pw[0], "Pierwszy test4", 111);
-        send(pw[0], "Pierwszy test3", 131);
+        send(pw[0], "Jedyny komunikat", 111);
+        for (int i = 0; i < 3; i++)
+            try {
+                pw[i].close();
+            } catch (IOException e) {
+            }
+        for (int i = 0; i < 3; i++)
+            pw[i].close();
     }
 
     private static void send(PipedWriter pipedWriter, String s, int i) throws IOException {
