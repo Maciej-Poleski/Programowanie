@@ -1,0 +1,5 @@
+C:\Users\evil\Projekty\Studia\Satori\Programowanie\N\N\bin\Debug\N.exe
+C:\Users\evil\Projekty\Studia\Satori\Programowanie\N\N\bin\Debug\N.pdb
+C:\Users\evil\Projekty\Studia\Satori\Programowanie\N\N\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\evil\Projekty\Studia\Satori\Programowanie\N\N\obj\x86\Debug\N.exe
+C:\Users\evil\Projekty\Studia\Satori\Programowanie\N\N\obj\x86\Debug\N.pdb
