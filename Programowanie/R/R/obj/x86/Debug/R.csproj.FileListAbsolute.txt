@@ -1,0 +1,5 @@
+C:\Users\evil\Projekty\Studia\Satori\Programowanie\R\R\bin\Debug\R.exe
+C:\Users\evil\Projekty\Studia\Satori\Programowanie\R\R\bin\Debug\R.pdb
+C:\Users\evil\Projekty\Studia\Satori\Programowanie\R\R\obj\x86\Debug\R.exe
+C:\Users\evil\Projekty\Studia\Satori\Programowanie\R\R\obj\x86\Debug\R.pdb
+C:\Users\evil\Projekty\Studia\Satori\Programowanie\R\R\obj\x86\Debug\R.csprojResolveAssemblyReference.cache
