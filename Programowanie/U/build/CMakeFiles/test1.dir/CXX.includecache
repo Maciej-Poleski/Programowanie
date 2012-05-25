@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/evil/Studia/Przedmioty/Programowanie-cxx/U/fraction.h
+iostream
+-
+algorithm
+-
+utility
+-
+vector
+-
+
+/home/evil/Studia/Przedmioty/Programowanie-cxx/U/test1.cxx
+iostream
+-
+fraction.h
+/home/evil/Studia/Przedmioty/Programowanie-cxx/U/fraction.h
+
