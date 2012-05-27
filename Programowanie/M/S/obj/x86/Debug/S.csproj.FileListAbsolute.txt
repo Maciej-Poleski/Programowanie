@@ -1,0 +1,4 @@
+C:\Users\evil\Projekty\Studia\Satori\Programowanie\M\S\bin\Debug\S.exe
+C:\Users\evil\Projekty\Studia\Satori\Programowanie\M\S\bin\Debug\S.pdb
+C:\Users\evil\Projekty\Studia\Satori\Programowanie\M\S\obj\x86\Debug\S.exe
+C:\Users\evil\Projekty\Studia\Satori\Programowanie\M\S\obj\x86\Debug\S.pdb

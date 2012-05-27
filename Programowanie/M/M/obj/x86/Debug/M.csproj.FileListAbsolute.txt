@@ -1,0 +1,10 @@
+C:\Users\evil\Projekty\Szkoła\Satori\Programowanie\M\M\M\bin\Debug\M.exe
+C:\Users\evil\Projekty\Szkoła\Satori\Programowanie\M\M\M\bin\Debug\M.pdb
+C:\Users\evil\Projekty\Szkoła\Satori\Programowanie\M\M\M\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\evil\Projekty\Szkoła\Satori\Programowanie\M\M\M\obj\x86\Debug\M.exe
+C:\Users\evil\Projekty\Szkoła\Satori\Programowanie\M\M\M\obj\x86\Debug\M.pdb
+C:\Users\evil\Projekty\Studia\Satori\Programowanie\M\M\obj\x86\Debug\M.exe
+C:\Users\evil\Projekty\Studia\Satori\Programowanie\M\M\obj\x86\Debug\M.pdb
+C:\Users\evil\Projekty\Studia\Satori\Programowanie\M\M\bin\Debug\M.exe
+C:\Users\evil\Projekty\Studia\Satori\Programowanie\M\M\bin\Debug\M.pdb
+C:\Users\evil\Projekty\Studia\Satori\Programowanie\M\M\obj\x86\Debug\ResolveAssemblyReference.cache
