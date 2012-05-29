@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/evil/Studia/Przedmioty/Programowanie-cxx/V/test0.cxx
+iostream
+-
+tracer.cpp
+/home/evil/Studia/Przedmioty/Programowanie-cxx/V/tracer.cpp
+
+/home/evil/Studia/Przedmioty/Programowanie-cxx/V/tracer.cpp
+string
+-
+vector
+-
+iostream
+-
+

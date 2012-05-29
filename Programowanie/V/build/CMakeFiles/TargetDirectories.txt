@@ -1,0 +1,1 @@
+/home/evil/Studia/Przedmioty/Programowanie-cxx/V/build/CMakeFiles/test0.dir

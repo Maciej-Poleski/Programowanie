@@ -1,0 +1,27 @@
+[Buildset]
+BuildItems=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x01\x00\x00\x00\x0b\x00\x00\x00\x00\x01\x00\x00\x00\x02\x00V)
+
+[CMake]
+BuildDirs=/home/evil/Studia/Przedmioty/Programowanie-cxx/V/build
+CMakeDir=/usr/share/cmake/Modules
+Current CMake Binary=file:///usr/bin/cmake
+CurrentBuildDir=file:///home/evil/Studia/Przedmioty/Programowanie-cxx/V/build
+CurrentBuildType=Debug
+CurrentInstallDir=
+Extra Arguments=-DDEBUG=Yes
+ProjectRootRelative=./
+
+[Launch]
+Launch Configurations=Launch Configuration 0
+
+[Launch][Launch Configuration 0]
+Configured Launch Modes=execute
+Configured Launchers=nativeAppLauncher
+Name=test0
+Type=Native Application
+
+[Launch][Launch Configuration 0][Data]
+Configured from ProjectItem=V,test0
+Project Target=V,test0
+Working Directory=file:///home/evil/Studia/Przedmioty/Programowanie-cxx/V/build/
+isExecutable=false
