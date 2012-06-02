@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/evil/Studia/Przedmioty/Programowanie-cxx/W/strings.h
+new
+-
+limits
+-
+string
+-
+iostream
+-
+stdexcept
+-
+
+/home/evil/Studia/Przedmioty/Programowanie-cxx/W/test1.cxx
+iostream
+-
+strings.h
+/home/evil/Studia/Przedmioty/Programowanie-cxx/W/strings.h
+cassert
+-
+

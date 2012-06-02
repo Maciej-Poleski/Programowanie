@@ -1,0 +1,3 @@
+/home/evil/Studia/Przedmioty/Programowanie-cxx/W/build/CMakeFiles/test0.dir
+/home/evil/Studia/Przedmioty/Programowanie-cxx/W/build/CMakeFiles/test1.dir
+/home/evil/Studia/Przedmioty/Programowanie-cxx/W/build/CMakeFiles/test2.dir
