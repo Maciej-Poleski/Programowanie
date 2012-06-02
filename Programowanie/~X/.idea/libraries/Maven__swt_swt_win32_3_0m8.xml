@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: swt:swt-win32:3.0m8">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/swt/swt-win32/3.0m8/swt-win32-3.0m8.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/swt/swt-win32/3.0m8/swt-win32-3.0m8-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/swt/swt-win32/3.0m8/swt-win32-3.0m8-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
