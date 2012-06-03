@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/evil/Studia/Przedmioty/Programowanie-cxx/X/ZepsutyULongLong.cpp
+map
+-
+set
+-
+iostream
+-
+cstdlib
+-
+climits
+-
+ZepsutyULongLong.h
+/home/evil/Studia/Przedmioty/Programowanie-cxx/X/ZepsutyULongLong.h
+
+/home/evil/Studia/Przedmioty/Programowanie-cxx/X/ZepsutyULongLong.h
+map
+-
+set
+-
+iosfwd
+-
+
